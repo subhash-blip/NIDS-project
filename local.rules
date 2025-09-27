@@ -1,0 +1,12 @@
+
+alert icmp any any -> any any (msg:"ICMP Ping Detected"; sid:1000001; rev:1;)
+
+ Detect multiple SSH login attempts (brute force)
+alert tcp any any -> any 22 (msg:"Possible SSH Brute Force Attack"; flow:to_server,established; detection_filter:track by_src, count 5, seconds 60; classtype:attempted-admin; sid:100001; rev:1;)
+
+ Detect multiple FTP login attempts (brute force)
+alert tcp any any -> any 21 (msg:"Possible FTP Brute Force Attack"; flow:to_server,established; detection_filter:track by_src, count 5, seconds 60; classtype:attempted-admin; sid:100002; rev:1;)
+
+ Detect multiple HTTP login attempts (basic form brute force)
+alert http any any -> any any (msg:"Possible HTTP Brute Force Attack"; flow:to_server,established; content:"POST"; http_method; detection_filter:track by_src, count 10, seconds 60; classtype:web-application-attack; sid:100003; rev:1;)
+
